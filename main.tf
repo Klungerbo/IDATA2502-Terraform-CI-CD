@@ -6,8 +6,8 @@ terraform {
     }
   }
   backend "gcs" {
-    bucket  = "idata2502-port-1-tko"
-    prefix  = "terraform/state"
+    bucket = "idata2502-port-1-tko"
+    prefix = "terraform/state"
   }
 }
 
@@ -16,7 +16,6 @@ resource "google_storage_bucket" "bucket1" {
 }
 
 provider "google" {
-  #credentials = file("../idata2502-portfolio-1-tko-f20b96d955de.json")
   project = "idata2502-portfolio-1-tko"
   region  = "europe-west4"
   zone    = "europe-west4-a"
