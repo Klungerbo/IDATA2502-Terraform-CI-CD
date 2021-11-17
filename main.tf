@@ -8,8 +8,6 @@ terraform {
 }
 
 provider "google" {
-  //credentials = file("../idata2502-portfolio-1-tko-e83f60880ce2.json")
-
   project = "idata2502-portfolio-1-tko"
   region  = "europe-west4"
   zone    = "europe-west4-a"
