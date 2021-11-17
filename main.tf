@@ -5,6 +5,7 @@ terraform {
       version = "3.5.0"
     }
   }
+
   backend "gcs" {
     bucket = "idata2502-port-1-tko"
     prefix = "terraform/state"
