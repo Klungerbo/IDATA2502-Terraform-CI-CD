@@ -52,6 +52,8 @@ on:
 
 jobs:
   terraform:
+    env:
+      GCP_CREDENTIALS: ${{secrets.GCP_CREDENTIALS}}
     name: 'Terraform'
     runs-on: ubuntu-latest
     environment: production
