@@ -6,7 +6,7 @@ terraform {
     }
   }
   backend "gcs" {
-    bucket  = "tf-state-prod"
+    bucket  = "gcs_bucket"
     prefix  = "terraform/state"
   }
 }
