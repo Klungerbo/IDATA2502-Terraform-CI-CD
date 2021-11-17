@@ -7,6 +7,10 @@ terraform {
   }
 }
 
+resource "google_storage_bucket" "gcs_bucket" {
+  name = "terraform-bucket-idata2502-port-tko"
+}
+
 provider "google" {
   project = "idata2502-portfolio-1-tko"
   region  = "europe-west4"
