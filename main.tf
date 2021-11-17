@@ -6,18 +6,17 @@ terraform {
     }
   }
   backend "gcs" {
-    bucket  = "gcs_bucket"
+    bucket  = "idata2502-port-1-tko"
     prefix  = "terraform/state"
   }
 }
 
-
-resource "google_storage_bucket" "gcs_bucket" {
-  name = "terraform-bucket-idata2502-port-tko"
+resource "google_storage_bucket" "bucket1" {
+  name = "idata2502-port-1-tko"
 }
 
 provider "google" {
-  credentials = "../idata2502-portfolio-1-tko-e83f60880ce2.json.copy"
+  #credentials = file("../idata2502-portfolio-1-tko-f20b96d955de.json")
   project = "idata2502-portfolio-1-tko"
   region  = "europe-west4"
   zone    = "europe-west4-a"
@@ -25,4 +24,21 @@ provider "google" {
 
 resource "google_compute_network" "vpc_network" {
   name = "terraform-network-idata2502-port-tko"
+}
+
+resource "google_compute_instance" "vm_instance" {
+  name         = "terraform-instance"
+  machine_type = "f1-micro"
+
+  boot_disk {
+    initialize_params {
+      image = "debian-cloud/debian-9"
+    }
+  }
+
+  network_interface {
+    network = google_compute_network.vpc_network.name
+    access_config {
+    }
+  }
 }
