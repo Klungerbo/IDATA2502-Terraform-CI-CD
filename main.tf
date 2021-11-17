@@ -5,12 +5,12 @@ terraform {
       version = "3.5.0"
     }
   }
+  backend "gcs" {
+    bucket  = "tf-state-prod"
+    prefix  = "terraform/state"
+  }
 }
 
-backend "gcs" {
-  bucket  = "tf-state-prod"
-  prefix  = "terraform/state"
-}
 
 resource "google_storage_bucket" "gcs_bucket" {
   name = "terraform-bucket-idata2502-port-tko"
