@@ -107,5 +107,4 @@ jobs:
         echo Backend ip: $backend_ip
         echo DB ip: $db_ip
         nc -zvw3 $frontend_ip 8080
-        nc -zvw3 $frontend_ip 22
-        nc -zvw3 $frontend_ip 2525
+        nc -zvw3 $frontend_ip 80
