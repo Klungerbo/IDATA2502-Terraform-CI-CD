@@ -26,7 +26,7 @@ resource "google_compute_instance" "frontend" {
   name                    = "terraform-frontend-instance"
   machine_type            = "f1-micro"
   tags                    = ["frontend", "dev"]
-  metadata_startup_script = "echo 'This is frontend' > index.html ; nohup busybox httpd -f -p 8080 &"
+  metadata_startup_script = file("./install-scripts/frontend.sh") 
 
   boot_disk {
     initialize_params {
@@ -45,7 +45,7 @@ resource "google_compute_instance" "backend" {
   name                    = "terraform-backend-instance"
   machine_type            = "f1-micro"
   tags                    = ["backend", "dev"]
-  metadata_startup_script = "echo 'This is backend' > index.html ; nohup busybox httpd -f -p 8080 &"
+  metadata_startup_script = file("./install-scripts/backend.sh") 
 
   boot_disk {
     initialize_params {
@@ -64,7 +64,7 @@ resource "google_compute_instance" "db" {
   name                    = "terraform-db-instance"
   machine_type            = "f1-micro"
   tags                    = ["db", "dev"]
-  metadata_startup_script = "echo 'This is DB' > index.html ; nohup busybox httpd -f -p 8080 &"
+  metadata_startup_script = file("./install-scripts/db.sh") 
 
   boot_disk {
     initialize_params {
@@ -85,7 +85,7 @@ resource "google_compute_firewall" "default" {
 
   allow {
     protocol = "tcp"
-    ports    = ["8080"]
+    ports    = ["8080", "80"]
   }
 
   source_ranges = ["0.0.0.0/0"]
