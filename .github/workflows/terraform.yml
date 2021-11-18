@@ -100,5 +100,9 @@ jobs:
       env:
         GOOGLE_CREDENTIALS: ${{secrets.GOOGLE_CREDENTIALS}}
       run: |
-        output=$(terraform output ip)
-        echo $output
+        frontend-ip=$(terraform output frontend-ip)
+        backend-ip=$(terraform output frontend-ip)
+        db-ip=$(terraform output frontend-ip)
+        echo Frontend ip: $frontend-ip
+        echo Backend ip: $backend-ip
+        echo DB ip: $db-ip
