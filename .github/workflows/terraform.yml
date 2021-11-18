@@ -96,15 +96,18 @@ jobs:
       env:
         GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
     
-    - name: Call terraform output
+    - name: Test ports
       env:
         GOOGLE_CREDENTIALS: ${{secrets.GOOGLE_CREDENTIALS}}
       run: |
         frontend_ip=$(terraform output frontend-ip | tr -d '"')
-        backend_ip=$(terraform output frontend-ip | tr -d '"')
-        db_ip=$(terraform output frontend-ip | tr -d '"')
         echo Frontend ip: $frontend_ip
-        echo Backend ip: $backend_ip
-        echo DB ip: $db_ip
         nc -zvw3 $frontend_ip 8080
-        nc -zvw3 $frontend_ip 80
+        
+        backend_ip=$(terraform output frontend-ip | tr -d '"')
+        echo Backend ip: $backend_ip
+        nc -zvw3 $backend_ip 8080
+        
+        db_ip=$(terraform output frontend-ip | tr -d '"')
+        echo DB ip: $db_ip
+        nc -zvw3 $db_ip 8080
