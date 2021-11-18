@@ -26,7 +26,7 @@ resource "google_compute_instance" "frontend" {
   name                    = "terraform-frontend-instance"
   machine_type            = "f1-micro"
   tags                    = ["frontend", "dev"]
-  metadata_startup_script = file("./install-scripts/frontend.sh") 
+  metadata_startup_script = file("./install-scripts/frontend.sh")
 
   boot_disk {
     initialize_params {
@@ -45,7 +45,7 @@ resource "google_compute_instance" "backend" {
   name                    = "terraform-backend-instance"
   machine_type            = "f1-micro"
   tags                    = ["backend", "dev"]
-  metadata_startup_script = file("./install-scripts/backend.sh") 
+  metadata_startup_script = file("./install-scripts/backend.sh")
 
   boot_disk {
     initialize_params {
@@ -64,7 +64,7 @@ resource "google_compute_instance" "db" {
   name                    = "terraform-db-instance"
   machine_type            = "f1-micro"
   tags                    = ["db", "dev"]
-  metadata_startup_script = file("./install-scripts/db.sh") 
+  metadata_startup_script = file("./install-scripts/db.sh")
 
   boot_disk {
     initialize_params {
