@@ -22,11 +22,49 @@ resource "google_compute_network" "vpc_network" {
   name = "terraform-network-idata2502-port-tko"
 }
 
-resource "google_compute_instance" "vm_instance" {
-  name                    = "terraform-instance"
+resource "google_compute_instance" "frontend" {
+  name                    = "terraform-frontend-instance"
   machine_type            = "f1-micro"
-  tags                    = ["web", "dev"]
-  metadata_startup_script = "echo 'Hello, World' > index.html ; nohup busybox httpd -f -p 8080 &"
+  tags                    = ["frontend", "dev"]
+  metadata_startup_script = "echo 'This is frontend' > index.html ; nohup busybox httpd -f -p 8080 &"
+
+  boot_disk {
+    initialize_params {
+      image = "debian-cloud/debian-9"
+    }
+  }
+
+  network_interface {
+    network = google_compute_network.vpc_network.name
+    access_config {
+    }
+  }
+}
+
+resource "google_compute_instance" "backend" {
+  name                    = "terraform-backend-instance"
+  machine_type            = "f1-micro"
+  tags                    = ["backend", "dev"]
+  metadata_startup_script = "echo 'This is backend' > index.html ; nohup busybox httpd -f -p 8080 &"
+
+  boot_disk {
+    initialize_params {
+      image = "debian-cloud/debian-9"
+    }
+  }
+
+  network_interface {
+    network = google_compute_network.vpc_network.name
+    access_config {
+    }
+  }
+}
+
+resource "google_compute_instance" "db" {
+  name                    = "terraform-db-instance"
+  machine_type            = "f1-micro"
+  tags                    = ["db", "dev"]
+  metadata_startup_script = "echo 'This is DB' > index.html ; nohup busybox httpd -f -p 8080 &"
 
   boot_disk {
     initialize_params {
@@ -51,5 +89,5 @@ resource "google_compute_firewall" "default" {
   }
 
   source_ranges = ["0.0.0.0/0"]
-  target_tags   = ["web"]
+  target_tags   = ["frontend", "backend", "db"]
 }
