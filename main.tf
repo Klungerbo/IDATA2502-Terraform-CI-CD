@@ -13,9 +13,9 @@ terraform {
 }
 
 provider "google" {
-  project = "idata2502-portfolio-1-tko"
-  region  = "europe-west4"
-  zone    = "europe-west4-a"
+  project = var.project
+  region  = var.region
+  zone    = var.zone
 }
 
 resource "google_compute_network" "vpc_network" {
@@ -23,8 +23,10 @@ resource "google_compute_network" "vpc_network" {
 }
 
 resource "google_compute_instance" "vm_instance" {
-  name         = "terraform-instance"
-  machine_type = "f1-micro"
+  name                    = "terraform-instance"
+  machine_type            = "f1-micro"
+  tags                    = ["web", "dev"]
+  metadata_startup_script = "echo 'Hello, World' > index.html ; nohup busybox httpd -f -p 8080 &"
 
   boot_disk {
     initialize_params {
@@ -37,4 +39,17 @@ resource "google_compute_instance" "vm_instance" {
     access_config {
     }
   }
+}
+
+resource "google_compute_firewall" "default" {
+  name    = "web-firewall"
+  network = google_compute_network.vpc_network.name
+
+  allow {
+    protocol = "tcp"
+    ports    = ["8080"]
+  }
+
+  source_ranges = ["0.0.0.0/0"]
+  target_tags   = ["web"]
 }
