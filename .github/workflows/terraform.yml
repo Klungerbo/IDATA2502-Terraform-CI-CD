@@ -60,10 +60,10 @@ jobs:
         echo Frontend ip: $frontend_ip
         nc -zvw3 $frontend_ip 80
         
-        backend_ip=$(terraform output frontend-ip | tr -d '"')
+        backend_ip=$(terraform output backend-ip | tr -d '"')
         echo Backend ip: $backend_ip
         nc -zvw3 $backend_ip 8080
         
-        db_ip=$(terraform output frontend-ip | tr -d '"')
+        db_ip=$(terraform output db-ip | tr -d '"')
         echo DB ip: $db_ip
         nc -zvw3 $db_ip 8080
