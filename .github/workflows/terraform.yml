@@ -97,6 +97,8 @@ jobs:
         GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
     
     - name: Call terraform output
+      env:
+        GOOGLE_CREDENTIALS: ${{secrets.GOOGLE_CREDENTIALS}}
       run: |
         output=$(terraform output test)
         echo $output
